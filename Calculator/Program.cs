@@ -1,0 +1,99 @@
+﻿using System.ComponentModel.Design;
+
+namespace Calculator
+{
+    internal class Program
+    {
+        public static string DivideByZero = "Undefined: Cannot divide by zero";
+        public static string FactorOfZero = "Undefined: Cannot Factorise by zero";
+        static void Main(string[] args)
+        {
+            
+            while (true) 
+            {
+                string input;
+                string[] complex = { "BIN", "GEO", "VECT", "ENCRYPT" };
+                double num1 = 0, num2 = 0;
+                char[] operators = { '+', '-', '*', '/', '%', '!' };
+
+                input = Console.ReadLine();
+                for (int i = 0; i < complex.Length; i++) 
+                {
+                    if (input != complex[i])
+                    {
+                    int opIndex = input.IndexOfAny(operators);
+                        if (opIndex != -1)
+                        {
+                            string Snum1 = input.Substring(0, opIndex);
+                            char op = input[opIndex];
+                            string Snum2 = input.Substring(opIndex + 1);
+                            num1 = Convert.ToDouble(Snum1);
+                            if (op != '!')
+
+                            {
+                                num2 = Convert.ToDouble(Snum2);
+                            }
+
+
+                            switch (op)
+                            {
+                                case '+':
+                                    Calculate.Addition(ref num1, ref num2);
+                                    Console.WriteLine(Calculate.ans);
+                                    break;
+                                case '-':
+                                    Calculate.Subtraction(ref num1, ref num2);
+                                    Console.WriteLine(Calculate.ans);
+                                    break;
+                                case '*':
+                                    Calculate.Multiplication(ref num1, ref num2);
+                                    Console.WriteLine(Calculate.ans);
+                                    break;
+                                case '/':
+                                    if (num2 == 0)
+                                    {
+                                        Console.WriteLine(DivideByZero);
+                                        break;
+                                    }
+                                    Calculate.Division(ref num1, ref num2);
+                                    Console.WriteLine(Calculate.ans);
+                                    break;
+                                case '%':
+                                    Calculate.Modulus(ref num1, ref num2);
+                                    Console.WriteLine(Calculate.ans);
+                                    break;
+                                case '!':
+                                    //if (num1 == 0)
+                                    //{
+                                    //    Console.WriteLine(FactorOfZero);
+                                    //}
+                                    if (num1 < 0 || num1 % 1 != 0)
+                                    {
+                                        Console.WriteLine("Factorial requires a non-negative integer.");
+                                        break;
+                                    }
+                                    Console.WriteLine(Calculate.Factorial((int)num1));
+                                    break;
+                            }
+
+                        }
+                        else
+                        {
+                            string type = input, temp;
+
+                            input = Console.ReadLine();
+
+                            switch (type)
+                            {
+                                case "BIN":
+                                    Calculate.Binary(ref input);
+                                    Console.WriteLine(Calculate.ans);
+                                    break;
+                            }
+                        }
+                    }
+                }    
+            }  
+        }
+    }
+}
