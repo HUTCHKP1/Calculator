@@ -55,6 +55,8 @@ namespace Calculator
                                 break;
                         
                                 case "SUB":
+                                    Binary.Subtraction(choice[2], choice[3]);
+                                    Console.WriteLine(Binary.ans);
                                     break;
                                 case "MUL":
                                     break;
