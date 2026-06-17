@@ -9,10 +9,14 @@ namespace Calculator
     internal class Calculate
     {
         public static double ans = 0;
-        public static void Binary(ref string input)
+        public static void Binary(ref string inputA, ref string inputB)
         {
-            
+          
+            //char indexA =  inputA[inputA.Length - 1];
+            //char indexB = inputB[inputB.Length - 1];
+
         }
+        
         public static void Geometry()
         {
 
@@ -39,7 +43,7 @@ namespace Calculator
         }
         public static double Division(ref double num1, ref double num2)
         {
-            ans += (num1 / num2);
+            ans = (num1 / num2);
             return ans;
         }
         public static double Modulus(ref double num1, ref double num2)
