@@ -9,13 +9,6 @@ namespace Calculator
     internal class Calculate
     {
         public static double ans = 0;
-        public static void Binary(ref string inputA, ref string inputB)
-        {
-          
-            //char indexA =  inputA[inputA.Length - 1];
-            //char indexB = inputB[inputB.Length - 1];
-
-        }
         
         public static void Geometry()
         {

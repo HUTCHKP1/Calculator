@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Linq;
 
 namespace Calculator
 {
@@ -14,18 +15,54 @@ namespace Calculator
                 string input;
                 string[] choice;
                 string[] complex = { "BIN", "GEO", "VECT", "ENCRYPT" };
+                
                 double num1 = 0, num2 = 0;
                 char[] operators = { '+', '-', '*', '/', '%', '!' };
                 input = Console.ReadLine();
+                
                 choice = input.Split(' ');
-                if (complex.Contains(choice[0])) // https://www.geeksforgeeks.org/c-sharp/c-sharp-string-contains-method/, https://www.delftstack.com/howto/csharp/check-for-an-element-inside-an-array-in-csharp/
+                if (choice[0] == "HELP" || choice[1] == "HELP" || choice[2] == "HELP" || choice[3] == "HELP")
+                {
+                    Console.WriteLine("Binary operations: ADD, SUB, MUL, DIV, MOD. Usage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]");
+                }
+                else if (complex.Contains(choice[0])) // https://www.geeksforgeeks.org/c-sharp/c-sharp-string-contains-method/, https://www.delftstack.com/howto/csharp/check-for-an-element-inside-an-array-in-csharp/
                 {
                     switch (choice[0])
                     {
                         case "BIN":
-                            Calculate.Binary(ref input);
-                            Console.WriteLine(Calculate.ans);
-                            break;
+                            string[] binaryMethods = { "ADD", "SUB", "MUL", "DIV", "MOD" };
+                            char[] isBinary = { '0', '1' };
+                            if (choice.Length != 4)
+                            {
+                                Console.WriteLine("Invalid input for binary operation. Please provide an operation and two binary numbers.");
+                                break;
+                            } 
+                            if (!binaryMethods.Contains(choice[1]))
+                            {
+                                Console.WriteLine("Invalid binary operation. Supported operations are: ADD, SUB, MUL, DIV, MOD.");
+                                break;
+                            }
+                            //{
+                            //    Console.WriteLine("Invalid binary numbers. Please provide valid binary numbers consisting of only 0s and 1s.");
+                            //    break;
+                            //}
+
+                            switch (choice[1])
+                            {
+                                case "ADD":
+                                    Binary.Addition(choice[2], choice[3]);
+                                    Console.WriteLine(Binary.ans);
+                                break;
+                        
+                                case "SUB":
+                                    break;
+                                case "MUL":
+                                    break;
+                                case "DIV":
+                                    break;
+                                case "MOD":
+                                    break;
+                            } break;
                         case "GEO":
                             Calculate.Geometry();
                             break;
