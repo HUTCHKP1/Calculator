@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Calculator
         public static string Addition(string inputA, string inputB)
         {
             // add binary numbers
-            int indexA =  inputA.Length - 1;
+            int indexA = inputA.Length - 1;
             int indexB = inputB.Length - 1;
             int carry = 0;
             string result = "";
@@ -34,49 +35,52 @@ namespace Calculator
             ans = result;
             return ans;
         }
-        public static string Subtraction(string inputA, string inputB)
+        public static string Subtraction(string inputA, string inputB, bool signed)
         {
-            // subtract binary numbers
-            // same as addition, but we need to borrow instead of carry when the digit in inputA is smaller than the corresponding digit in inputB
-            // using Two's complement method for subtraction, we can convert the subtraction operation into an addition operation by taking the Two's complement of the second number and adding it to the first number
-            // use pad left by length, and use math.max to ensure both binary numbers have the same length, and add 1 to the Two's complement of the second number to get the correct result
-            int maxLength = Math.Max(inputA.Length, inputB.Length);
-            inputA = inputA.PadLeft(maxLength, '0');
-            inputB = inputB.PadLeft(maxLength, '0');
-            int indexA = inputA.Length - 1;
-            int indexB = inputB.Length - 1;
-            int borrow = 0;
-            string result = "";
-            for (int i = 0; i < maxLength; i++)
+            if (signed)
             {
-                // flip the bits of inputB to get the One's complement, and add 1 to get the Two's complement
-                int bitA = inputA[indexA - i] - '0';
-                int bitB = (inputB[indexB - i] - '0') ^ 1; // flip the bits of inputB using XOR with 1
-                int sum = bitA + bitB + borrow; // add the bits of inputA, the flipped bits of inputB, and the previous borrow
-                result = (sum % 2) + result; // add the least significant bit of the sum to the result
-                borrow = sum / 2; // calculate the new borrow, which is the most significant bit of the sum
-
+                PadSigned(ref inputA, ref inputB);
             }
-            ans = result;
+            else
+            {
+                PadUnsigned(ref inputA, ref inputB);
+            }
+            string negatedB = Negate(inputB);
+            ans = Addition(inputA, negatedB);
             return ans;
         }
-        }
-        public static string Multiplication(string inputA, string inputB)
+        public static string Negate(string input)
         {
-            // multiply binary numbers
-            return ans;
+            string result = "";
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+                if (c == '1')
+                {
+                    result = result + '0';
+                }
+                else if (c == '0')
+                {
+                    result = result + '1';
+                }
+            }
+            string flip = Addition(result, "1");
+            return flip;
         }
-        public static string Division(string inputA, string inputB)
+        public static void PadSigned(ref string a, ref string b)
         {
-            // divide binary numbers
-            return ans;
+            int maxLength = Math.Max(a.Length ,b.Length);
+            char signA = a[0];
+            char signB = b[0];
+            a = a.PadLeft(maxLength, signA);
+            b = b.PadLeft(maxLength, signB);
         }
-        public static string Modulus(string inputA, string inputB)
+        public static void PadUnsigned(ref string a, ref string b)
         {
-            // modulus of binary numbers
-            return ans;
+            int maxLength = Math.Max(a.Length, b.Length);
+            a = a.PadLeft(maxLength, '0');
+            b = b.PadLeft(maxLength, '0');
         }
 
-            `
     }
 }

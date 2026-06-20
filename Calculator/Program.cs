@@ -18,9 +18,10 @@ namespace Calculator
                 
                 double num1 = 0, num2 = 0;
                 char[] operators = { '+', '-', '*', '/', '%', '!' };
-                input = Console.ReadLine();
-                
+                input = Console.ReadLine() ?? "";
+
                 choice = input.Split(' ');
+                
                 if (choice[0] == "HELP" || choice[1] == "HELP" || choice[2] == "HELP" || choice[3] == "HELP")
                 {
                     Console.WriteLine("Binary operations: ADD, SUB, MUL, DIV, MOD. Usage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]");
@@ -30,7 +31,7 @@ namespace Calculator
                     switch (choice[0])
                     {
                         case "BIN":
-                            string[] binaryMethods = { "ADD", "SUB", "MUL", "DIV", "MOD" };
+                            string[] binaryMethods = { "ADDS","ADDU","SUBS","SUBU"};
                             char[] isBinary = { '0', '1' };
                             if (choice.Length != 4)
                             {
@@ -39,7 +40,7 @@ namespace Calculator
                             } 
                             if (!binaryMethods.Contains(choice[1]))
                             {
-                                Console.WriteLine("Invalid binary operation. Supported operations are: ADD, SUB, MUL, DIV, MOD.");
+                                Console.WriteLine("Invalid binary operation. Supported operations are: ADDS,ADDU, SUBS, and SUBU");
                                 break;
                             }
                             //{
