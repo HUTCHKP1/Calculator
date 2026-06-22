@@ -7,7 +7,7 @@
         public void TestMethod1() // Addition test 1
         {
             double expectedResult = 2;
-            double actualResult = (1+1);
+            double actualResult = (1 + 1);
             Assert.AreEqual(expectedResult, actualResult);
         }
         [TestMethod]

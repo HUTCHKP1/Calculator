@@ -95,6 +95,102 @@ namespace Calculator
             a = a.PadLeft(maxLength, '0');
             b = b.PadLeft(maxLength, '0');
         }
+        public static string DecimalToBCD(string decimalInput)
+        {
+            string result = "", fourBits;
+            foreach (char c in decimalInput)
+            {
+                int digit = c - '0';
+                fourBits = Convert.ToString(digit, 2);
+                fourBits = fourBits.PadLeft(4, '0');
+                result = result + fourBits + " ";
+            }
+            return result.Trim();
+        }
+
+
+        // https://www.scaler.com/topics/bcd-addition/
+        public static string BCDAddition(string bcdA, string bcdB)
+        {
+            // Lab 14
+            string[] groupsA = bcdA.Split(' ');
+            string[] groupsB = bcdB.Split(' ');
+
+            int lenA = groupsA.Length;
+            int lenB = groupsB.Length;
+            int maxLen = Math.Max(lenA, lenB); // Lab 4
+            
+            // Build right-aligned padded arrays of equal length
+            string[] paddedA = new string[maxLen];
+            string[] paddedB = new string[maxLen];
+
+            for (int i = 0; i < maxLen; i++)
+            {
+                int srcA = i - (maxLen - lenA); // negative = before the start of the array
+                int srcB = i - (maxLen - lenB);
+
+                if (srcA >= 0)
+                {
+                    paddedA[i] = groupsA[srcA];
+                }
+                else
+                {
+                    paddedA[i] = "0000";
+                }
+                if (srcB >= 0)
+                {
+                    paddedB[i] = groupsB[srcB];
+                }
+                else
+                {
+                    paddedB[i] = "0000";
+                }
+            }
+            // Result array — one slot bigger in case there's a final carry
+            string[] resultArr = new string[maxLen + 1];
+
+                // C# default for string[] elements is null, so initialise them (microsoft Learn)
+                for (int i = 0; i <= maxLen; i++)
+                {
+                    resultArr[i] = "";
+                }
+                int carry = 0;
+                // Work RIGHT TO LEFT through the groups
+                for (int i = maxLen - 1; i >= 0; i--)
+                {
+                int sumVal = Convert.ToInt32(paddedA[i], 2)
+                           + Convert.ToInt32(paddedB[i], 2)
+                           + carry;
+                    carry = 0;
+                    if (sumVal > 9)
+                    {
+                        sumVal -= 10;
+                        carry = 1;
+                    }
+                // Store in slot i+1 so slot 0 stays free for a final carry
+                    resultArr[i + 1] = Convert.ToString(sumVal, 2).PadLeft(4, '0');
+                }
+
+                // If there's still a carry after all groups, put "0001" in slot 0
+                if (carry == 1)
+                {
+                    resultArr[0] = "0001";
+                }
+                // Build output string with + concatenation — no String.Join needed
+                string result = "";
+                for (int i = 0; i <= maxLen; i++)
+                {
+                    if (resultArr[i] != "")
+                    {
+                        if (result != "")
+                        {
+                            result += " ";
+                        }
+                        result += resultArr[i];
+                    }
+                }
+            return result;
+        }
 
     }
 }

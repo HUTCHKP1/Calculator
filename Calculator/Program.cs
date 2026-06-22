@@ -25,23 +25,29 @@ namespace Calculator
 
                 if (choice.Contains("HELP"))
                 {
-                    Console.WriteLine("Binary operations: ADDS, ADDU, SUBS, SUBU and CONVERT \nUsage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]");
+                    Console.WriteLine("Binary operations: ADDS, ADDU, SUBS, SUBU, BCD, BCDA and CONVERT \nUsage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]");
                 }
                 else if (complex.Contains(choice[0])) // https://www.geeksforgeeks.org/c-sharp/c-sharp-string-contains-method/, https://www.delftstack.com/howto/csharp/check-for-an-element-inside-an-array-in-csharp/
                 {
                     switch (choice[0])
                     {
                         case "BIN":
-                            string[] binaryMethods = { "ADDS", "ADDU", "SUBS", "SUBU", "CONVERT" };
+                            string[] binaryMethods = { "ADDS", "ADDU", "SUBS", "SUBU", "CONVERT", "BCD", "BCDA" };
                             char[] isBinary = { '0', '1' };
-                            if (choice.Length != 4)
+                            //if (choice.Length != 4)
+                            //{
+                            //    Console.WriteLine("Invalid input for binary operation. Please provide an operation and binary number(s).");
+                            //    break;
+                            //}
+                            if (choice.Length < 2)
                             {
-                                Console.WriteLine("Invalid input for binary operation. Please provide an operation and binary number(s).");
+                                Console.WriteLine("Usage: BIN [OPERATION] ...");
                                 break;
                             }
+
                             if (!binaryMethods.Contains(choice[1]))
                             {
-                                Console.WriteLine("Invalid binary operation. Supported operations are: ADDS, ADDU, SUBU and CONVERT");
+                                Console.WriteLine("Invalid binary operation. Supported operations are: ADDS, ADDU, SUBU, BCD, BCDA and CONVERT");
                                 break;
                             }
                             //{
@@ -93,6 +99,26 @@ namespace Calculator
                                             Console.WriteLine($"HEX = {hexOutput}\nBINARY = {binOutput}");
                                             break;
                                     }
+                                    break;
+                                case "BCD":
+                                    if (choice.Length != 3)
+                                    {
+                                        Console.WriteLine("Usage: BIN BCD [decimal number]");
+                                        break;
+                                    }
+                                    Console.WriteLine(Binary.DecimalToBCD(choice[2]));
+                                    break;
+                                case "BCDA":
+                                    if (choice.Length != 4)
+                                    {
+                                        Console.WriteLine("Usage: BIN BCDA [decimal number] [decimal number]");
+                                        break;
+                                    }
+                                    string bcdA = Binary.DecimalToBCD(choice[2]);
+                                    string bcdB = Binary.DecimalToBCD(choice[3]);
+                                    Console.WriteLine($"BCD A:  {bcdA}");
+                                    Console.WriteLine($"BCD B:  {bcdB}");
+                                    Console.WriteLine($"Result: {Binary.BCDAddition(bcdA, bcdB)}");
                                     break;
                             }
                             break;
