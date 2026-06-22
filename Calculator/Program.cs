@@ -9,23 +9,32 @@ namespace Calculator
         public static string FactorOfZero = "Undefined: Cannot Factorise by zero";
         static void Main(string[] args)
         {
-
-            while (true)
+            bool running;
+            running = true;
+            while (running)
             {
                 string input;
                 string[] choice;
                 string[] complex = { "BIN", "GEO", "VECT", "ENCRYPT" };
                 string[] conversion = { "BIN", "HEX", "DEC" };
-                
+
                 double num1 = 0, num2 = 0;
                 char[] operators = { '+', '-', '*', '/', '%', '!' };
-                input = Console.ReadLine()?? "";
+                input = Console.ReadLine() ?? "";
 
                 choice = input.Split(' ');
 
+                // Exit
+                if (choice.Length > 0 && choice[0] == "ESC")
+                {
+                    Console.WriteLine("Exiting...");
+                    running = false;
+                    continue;
+                }
+
                 if (choice.Contains("HELP"))
                 {
-                    Console.WriteLine("Binary operations: ADDS, ADDU, SUBS, SUBU, BCD, BCDA and CONVERT \nUsage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]");
+                    Console.WriteLine("Binary operations: ADDS, ADDU, SUBS, SUBU, BCD, BCDA, CONVERT \nUsage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]\nOther operations: CLR, ESC");
                 }
                 else if (complex.Contains(choice[0])) // https://www.geeksforgeeks.org/c-sharp/c-sharp-string-contains-method/, https://www.delftstack.com/howto/csharp/check-for-an-element-inside-an-array-in-csharp/
                 {
@@ -129,6 +138,9 @@ namespace Calculator
                             Calculate.Vectors();
                             break;
                         case "ENCRYPT":
+                            break;
+                        case "CLR":
+                            Console.Clear();
                             break;
                     }
                 }
