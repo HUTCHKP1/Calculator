@@ -15,32 +15,33 @@ namespace Calculator
                 string input;
                 string[] choice;
                 string[] complex = { "BIN", "GEO", "VECT", "ENCRYPT" };
+                string[] conversion = { "BIN", "HEX", "DEC" };
                 
                 double num1 = 0, num2 = 0;
                 char[] operators = { '+', '-', '*', '/', '%', '!' };
                 input = Console.ReadLine()?? "";
 
                 choice = input.Split(' ');
-                
-                if (choice[0] == "HELP" || choice[1] == "HELP" || choice[2] == "HELP" || choice[3] == "HELP")
+
+                if (choice.Contains("HELP"))
                 {
-                    Console.WriteLine("Binary operations: ADD, SUB, MUL, DIV, MOD. Usage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]");
+                    Console.WriteLine("Binary operations: ADDS, ADDU, SUBS, SUBU and CONVERT \nUsage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]");
                 }
                 else if (complex.Contains(choice[0])) // https://www.geeksforgeeks.org/c-sharp/c-sharp-string-contains-method/, https://www.delftstack.com/howto/csharp/check-for-an-element-inside-an-array-in-csharp/
                 {
                     switch (choice[0])
                     {
                         case "BIN":
-                            string[] binaryMethods = { "ADD", "SUB"};
+                            string[] binaryMethods = { "ADDS", "ADDU", "SUBS", "SUBU", "CONVERT" };
                             char[] isBinary = { '0', '1' };
                             if (choice.Length != 4)
                             {
-                                Console.WriteLine("Invalid input for binary operation. Please provide an operation and two binary numbers.");
+                                Console.WriteLine("Invalid input for binary operation. Please provide an operation and binary number(s).");
                                 break;
-                            } 
+                            }
                             if (!binaryMethods.Contains(choice[1]))
                             {
-                                Console.WriteLine("Invalid binary operation. Supported operations are: ADD and SUB");
+                                Console.WriteLine("Invalid binary operation. Supported operations are: ADDS, ADDU, SUBU and CONVERT");
                                 break;
                             }
                             //{
@@ -50,22 +51,51 @@ namespace Calculator
 
                             switch (choice[1])
                             {
-                                case "ADD":
+                                case "ADDS":
+                                    string a = choice[2];
+                                    string b = choice[3];
+                                    Binary.PadSigned(ref a, ref b);
+                                    Binary.Addition(a, b);
+                                    Console.WriteLine(Binary.ans);
+                                    break;
+
+                                case "ADDU":
                                     Binary.Addition(choice[2], choice[3]);
                                     Console.WriteLine(Binary.ans);
-                                break;
-                        
-                                case "SUB":
-                                    Binary.Subtraction(choice[2], choice[3]);
+                                    break;
+                                case "SUBS":
+                                    Binary.Subtraction(choice[2], choice[3], true);
                                     Console.WriteLine(Binary.ans);
                                     break;
-                                case "MUL":
+                                case "SUBU":
+                                    Binary.Subtraction(choice[2], choice[3], false);
+                                    Console.WriteLine(Binary.ans);
                                     break;
-                                case "DIV":
+                                case "CONVERT":
+                                    int decOutput;
+                                    string hexOutput, binOutput;
+                                    switch (choice[2])
+                                    {
+                                        case "BIN":
+                                            decOutput = Convert.ToInt32(choice[3], 2);
+                                            hexOutput = Convert.ToString(decOutput, 16).ToUpper();
+                                            Console.WriteLine($"DECIMAL = {decOutput}\nHEX = {hexOutput}");
+                                            break;
+                                        case "HEX":
+                                            decOutput = Convert.ToInt32(choice[3], 16); // Base 16 (Decimal)
+                                            binOutput = Convert.ToString(decOutput, 2); // Base 2 (Hexidecimal)
+                                            Console.WriteLine($"DECIMAL = {decOutput}\nBINARY = {binOutput}");
+                                            break;
+                                        case "DEC":
+                                            decOutput = int.Parse(choice[3]); // Just parse, already decimal
+                                            binOutput = Convert.ToString(decOutput, 2); // Base 2 (Hexidecimal)
+                                            hexOutput = Convert.ToString(decOutput, 16).ToUpper();
+                                            Console.WriteLine($"HEX = {hexOutput}\nBINARY = {binOutput}");
+                                            break;
+                                    }
                                     break;
-                                case "MOD":
-                                    break;
-                            } break;
+                            }
+                            break;
                         case "GEO":
                             Calculate.Geometry();
                             break;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    internal class Binary
+    public class Binary
     {
         public static string ans = "0";
         public static string Addition(string inputA, string inputB)
@@ -37,6 +37,7 @@ namespace Calculator
         }
         public static string Subtraction(string inputA, string inputB, bool signed)
         {
+            string temp, truncatedAns, negatedB;
             if (signed)
             {
                 PadSigned(ref inputA, ref inputB);
@@ -45,10 +46,23 @@ namespace Calculator
             {
                 PadUnsigned(ref inputA, ref inputB);
             }
-            string negatedB = Negate(inputB);
-            ans = Addition(inputA, negatedB);
+            negatedB = Negate(inputB);
+            temp = Addition(inputA, negatedB);
+            // Truncate ans to match inputA's length
+            truncatedAns = temp.Substring(temp.Length - inputA.Length, inputA.Length);
+            ans = truncatedAns;
             return ans;
         }
+        /*
+         * Concise error Negating "0000" returns "10000" 
+         * because Negate flips bits to "1111", 
+         * calls Addition("1111","1") 
+         * which produces "10000" (an extra carry bit).
+         * 
+         * Need to implement a trim to remove the excess "1", 
+         * and ensure the output is the same character len 
+         * as the max input length.
+         */
         public static string Negate(string input)
         {
             string result = "";

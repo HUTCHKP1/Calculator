@@ -1,7 +1,7 @@
 ﻿namespace CalcTest1
 {
     [TestClass]
-    public sealed class Test1
+    public sealed class BasicTest
     {
         [TestMethod]
         public void TestMethod1() // Addition test 1
