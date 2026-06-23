@@ -15,7 +15,7 @@ namespace Calculator
             {
                 string input;
                 string[] choice;
-                string[] complex = { "BIN", "GEO", "VECT", "ENCRYPT" };
+                string[] complex = { "BIN", "GEO", "VECT", "ENCRYPT","mat", "addMat", "dotMat", "scalMat", "detMat", "invMat" };
                 string[] conversion = { "BIN", "HEX", "DEC" };
 
                 double num1 = 0, num2 = 0;
@@ -31,10 +31,15 @@ namespace Calculator
                     running = false;
                     continue;
                 }
-
+                //Help
                 if (choice.Contains("HELP"))
                 {
                     Console.WriteLine("Binary operations: ADDS, ADDU, SUBS, SUBU, BCD, BCDA, CONVERT \nUsage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]\nOther operations: CLR, ESC");
+                }
+                //Clear
+                else if (choice[0] == "CLR")
+                {
+                    Console.Clear();
                 }
                 else if (complex.Contains(choice[0])) // https://www.geeksforgeeks.org/c-sharp/c-sharp-string-contains-method/, https://www.delftstack.com/howto/csharp/check-for-an-element-inside-an-array-in-csharp/
                 {
@@ -138,6 +143,113 @@ namespace Calculator
                             Calculate.Vectors();
                             break;
                         case "ENCRYPT":
+                            break;
+                        case "mat":
+                            // Usage: mat a 1 2 3 4
+                            if (choice.Length != 6)
+                            {
+                                Console.WriteLine("Usage: mat [name] [a] [b] [c] [d]");
+                                break;
+                            }
+                            Matrix.StoreMatrix(
+                            choice[1],
+                            Convert.ToInt32(choice[2]),
+                            Convert.ToInt32(choice[3]),
+                            Convert.ToInt32(choice[4]),
+                            Convert.ToInt32(choice[5])
+                            );
+                            Console.WriteLine($"Matrix {choice[1]} stored:");
+                            Matrix.DisplayMatrix(Matrix.GetMatrix(choice[1]));  // see note below
+                            break;
+                        case "addMat":
+                            // Usage: addMat a b
+                            if(choice.Length != 3)
+                            {
+                                Console.WriteLine("Usage: addMat [matrix1] [matrix2]");
+                                break;
+                            }
+                            int addMXA = Matrix.FindMatrix(choice[1]);
+                            int addMXB = Matrix.FindMatrix(choice[2]);
+                            if (addMXA == -1 || addMXB == -1)
+                            {
+                                Console.WriteLine("Error: one or both matrices not found");
+                                break;
+                            }
+                            Matrix.DisplayMatrix(Matrix.AddMatrix(
+                            Matrix.GetMatrix(choice[1]),
+                            Matrix.GetMatrix(choice[2])
+                            ));
+                            break;
+                        case "scalMat":
+                            // Usage: scalMat 2 a
+                            if (choice.Length != 3)
+                            {
+                                Console.WriteLine("Usage: scalMat [scalar] [matrix]");
+                                break;
+                            }
+                            int scalMXS = Matrix.FindMatrix(choice[2]);
+                            if (scalMXS == -1)
+                            {
+                                Console.WriteLine("Error: matrix not found");
+                                break;
+                            }
+                            double scalar = Convert.ToDouble(choice[1]);
+                            Matrix.DisplayMatrix(Matrix.ScalarMultiply(scalar, Matrix.GetMatrix(choice[2])));
+                            break;
+                        case "dotMat":
+                            // Usage: dotMat a b
+                            if (choice.Length != 3)
+                            {
+                                Console.WriteLine("Usage: dotMat [matrix1] [matrix2]");
+                                break;
+                            }
+                            int dotMXD1 = Matrix.FindMatrix(choice[1]);
+                            int dotMXD2 = Matrix.FindMatrix(choice[2]);
+                            if (dotMXD1 == -1 || dotMXD2 == -1)
+                            {
+                                Console.WriteLine("Error: one or both matrices not found");
+                                break;
+                            }
+                            Matrix.DisplayMatrix(Matrix.DotProduct(
+                                Matrix.GetMatrix(choice[1]),
+                                Matrix.GetMatrix(choice[2])
+                            ));
+                            break;
+                        case "detMat":
+                            // Usage: detMat a
+                            if (choice.Length != 2)
+                            {
+                                Console.WriteLine("Usage: detMat [matrix]");
+                                break;
+                            }
+                            int MXDet = Matrix.FindMatrix(choice[1]);
+                            if (MXDet == -1)
+                            {
+                                Console.WriteLine("Error: matrix not found");
+                                break;
+                            }
+                            Console.WriteLine($"Determinant: {Matrix.Determinant(Matrix.GetMatrix(choice[1]))}");
+                            break;
+                        case "invMat":
+                            // Usage: invMat a
+                            if (choice.Length != 2)
+                            {
+                                Console.WriteLine("Usage: invMat [matrix]");
+                                break;
+                            }
+                            int MATInv = Matrix.FindMatrix(choice[1]);
+                            if (MATInv == -1)
+                            {
+                                Console.WriteLine("Error: matrix not found");
+                                break;
+                            }
+                            MatrixData inv = Matrix.Inverse(Matrix.GetMatrix(choice[1]));
+                            if (inv.name == "ERROR")
+                            {
+                                Console.WriteLine("Error: matrix is singular (determinant = 0), cannot invert");
+                                break;
+                            }
+                            Matrix.DisplayMatrix(inv);
                             break;
                         case "CLR":
                             Console.Clear();
