@@ -10,8 +10,53 @@ namespace Calculator
     public class Binary
     {
         public static string ans = "0";
+        /* Validates that a string contains only '0' and '1' characters
+        // Used to guard Addition, Subtraction, and Negate against corrupted input
+        // Returns true if valid binary, false otherwise
+        */
+        public static bool IsValidBinary(string input)
+        { 
+            if (input == "" || input == null)
+            {
+                return false;
+            }
+            foreach (char c in input) // Lab 13
+            {
+                if (c != '0' && c != '1')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /* Validates that a string contains only digit characters 0-9
+        // Used to guard DecimalToBCD against letters, decimals, symbols
+        // Returns true if valid decimal, false otherwise
+        */
+        public static bool IsValidDecimal(string input)
+        {
+            if (input == "" || input == null)
+            {
+                return false;
+            }
+            foreach (char c in input) // Lab 13
+            {
+                if (c < '0' || c > '9')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public static string Addition(string inputA, string inputB)
         {
+
+            // Input validation — returns error string rather than crashing
+            if (!IsValidBinary(inputA) || !IsValidBinary(inputB))
+            {
+                return "Error: inputs must contain only 0s and 1s";
+            }
             // add binary numbers
             int indexA = inputA.Length - 1;
             int indexB = inputB.Length - 1;
@@ -65,6 +110,10 @@ namespace Calculator
          */
         public static string Negate(string input)
         {
+            if (!IsValidBinary(input))
+            {
+                return "Error: input must contain only 0s and 1s";
+            }
             string result = "";
             for (int i = 0; i < input.Length; i++)
             {
@@ -97,6 +146,10 @@ namespace Calculator
         }
         public static string DecimalToBCD(string decimalInput)
         {
+            if (!IsValidDecimal(decimalInput))
+            {
+                return "Error: input must be a positive whole number";
+            }
             string result = "", fourBits;
             foreach (char c in decimalInput)
             {

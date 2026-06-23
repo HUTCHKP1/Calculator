@@ -6,7 +6,120 @@ namespace BinaryTesting
     {
 
         // ADDITION
+       
+        // VALIDATION — IsValidBinary
+       
 
+        [TestMethod]
+        // Invalid: empty string — no bits to process, should be rejected
+        public void IsValidBinary_EmptyString_ReturnsFalse()
+        {
+            Assert.IsFalse(Binary.IsValidBinary(""));
+        }
+
+        [TestMethod]
+        // Invalid: contains letters — not binary digits
+        public void IsValidBinary_Letters_ReturnsFalse()
+        {
+            Assert.IsFalse(Binary.IsValidBinary("abc"));
+        }
+
+        [TestMethod]
+        // Invalid: contains '2' — common mistake assuming binary goes higher than 1
+        public void IsValidBinary_ContainsTwo_ReturnsFalse()
+        {
+            Assert.IsFalse(Binary.IsValidBinary("102"));
+        }
+
+        [TestMethod]
+        // Valid: "0" and "1" are the only valid single characters
+        public void IsValidBinary_ValidInput_ReturnsTrue()
+        {
+            Assert.IsTrue(Binary.IsValidBinary("1010"));
+        }
+
+       
+        // VALIDATION — IsValidDecimal
+       
+
+        [TestMethod]
+        // Invalid: empty string
+        public void IsValidDecimal_EmptyString_ReturnsFalse()
+        {
+            Assert.IsFalse(Binary.IsValidDecimal(""));
+        }
+
+        [TestMethod]
+        // Invalid: decimal point — user passes "12.5" expecting BCD of 12.5
+        // The method only handles whole numbers, so this must be rejected
+        public void IsValidDecimal_ContainsDecimalPoint_ReturnsFalse()
+        {
+            Assert.IsFalse(Binary.IsValidDecimal("12.5"));
+        }
+
+        [TestMethod]
+        // Invalid: letters mixed in — catches typos like "12a"
+        public void IsValidDecimal_ContainsLetters_ReturnsFalse()
+        {
+            Assert.IsFalse(Binary.IsValidDecimal("12a"));
+        }
+
+        [TestMethod]
+        // Valid: "0" through "9" should all be accepted
+        public void IsValidDecimal_ValidInput_ReturnsTrue()
+        {
+            Assert.IsTrue(Binary.IsValidDecimal("1234"));
+        }
+
+       
+        // INVALID INPUT — Addition with guards
+       
+
+        [TestMethod]
+        // Invalid: non-binary characters passed to Addition
+        // Before validation was added, this would silently corrupt the carry arithmetic
+        // Now returns a clear error string instead of crashing or producing garbage
+        public void Addition_NonBinaryInput_ReturnsErrorString()
+        {
+            Assert.AreEqual("Error: inputs must contain only 0s and 1s",
+                Binary.Addition("abc", "1"));
+        }
+
+        [TestMethod]
+        // Invalid: empty string — previously caused IndexOutOfRangeException
+        public void Addition_EmptyInput_ReturnsErrorString()
+        {
+            Assert.AreEqual("Error: inputs must contain only 0s and 1s",
+                Binary.Addition("", "1"));
+        }
+
+       
+        // INVALID INPUT — DecimalToBCD with guards
+       
+
+        [TestMethod]
+        // Invalid: decimal point in input — user misunderstands what "decimal" means here
+        public void DecimalToBCD_ContainsDecimalPoint_ReturnsErrorString()
+        {
+            Assert.AreEqual("Error: input must be a positive whole number",
+                Binary.DecimalToBCD("12.5"));
+        }
+
+        [TestMethod]
+        // Invalid: empty string — previously returned empty string with no feedback
+        public void DecimalToBCD_EmptyString_ReturnsErrorString()
+        {
+            Assert.AreEqual("Error: input must be a positive whole number",
+                Binary.DecimalToBCD(""));
+        }
+
+        [TestMethod]
+        // Invalid: letters — catches user passing a word instead of a number
+        public void DecimalToBCD_Letters_ReturnsErrorString()
+        {
+            Assert.AreEqual("Error: input must be a positive whole number",
+                Binary.DecimalToBCD("abc"));
+        }
 
         [TestMethod]
         // Valid: simplest possible case — ensures the base condition (no bits, no carry) works
@@ -132,13 +245,14 @@ namespace BinaryTesting
         }
 
         [TestMethod]
-        // KNOWN BUG — intentional failure documentation
+        /* KNOWN BUG — intentional failure documentation
         // Negate("0000") returns "10000" instead of "0000"
         // flip 0000 → 1111, add 1 → 10000 (carry overflows into a 5th bit)
         // Negate does not truncate its result to the input width
         // Subtraction handles this safely via its own truncation step, but
         // calling Negate("0000") directly produces the wrong width
-        // This test asserts the actual (buggy) output to document the known limitation
+        / This test asserts the actual (buggy) output to document the known limitation
+        */
         public void Negate_Zero_KnownOverflowBug_DocumentedLimitation()
         {
             Assert.AreEqual("10000", Binary.Negate("0000"));
