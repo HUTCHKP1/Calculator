@@ -251,9 +251,6 @@ namespace Calculator
                             }
                             Matrix.DisplayMatrix(inv);
                             break;
-                        case "CLR":
-                            Console.Clear();
-                            break;
                     }
                 }
                 else
