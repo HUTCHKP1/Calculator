@@ -15,7 +15,11 @@ namespace Calculator
             {
                 string input;
                 string[] choice;
-                string[] complex = { "BIN", "GEO", "VECT", "ENCRYPT","mat", "addMat", "dotMat", "scalMat", "detMat", "invMat" };
+                string[] complex = 
+                { "BIN", "GEO", "VECT", "ENCRYPT",
+                  "mat", "addMat", "dotMat", "scalMat", 
+                  "detMat", "invMat", "numPrime", "numCheckDigit", "numRand" 
+                };
                 string[] conversion = { "BIN", "HEX", "DEC" };
 
                 double num1 = 0, num2 = 0;
@@ -250,6 +254,53 @@ namespace Calculator
                                 break;
                             }
                             Matrix.DisplayMatrix(inv);
+                            break;
+                        case "numPrime":
+                            if (choice.Length != 2)
+                            {
+                                Console.WriteLine("Usage: numPrime [number]");
+                                break;
+                            }
+                            int n = Convert.ToInt32(choice[1]);
+                            if (n > 10000)
+                            {
+                                Console.WriteLine("Error: number must be less than 10000");
+                                break;
+                            }
+                            if (NumberTheory.IsPrime(n))
+                            {
+                                Console.WriteLine($"{n} is prime");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"{n} is not prime");
+                            }
+                            break;
+                        case "numCheckDigit":
+                            if (choice.Length != 2)
+                            {
+                                Console.WriteLine("Usage: numCheckDigit [digits]");
+                                break;
+                            }
+                            if (!Binary.IsValidDecimal(choice[1]))
+                            {
+                                Console.WriteLine("Error: digits must be numeric");
+                                break;
+                            }
+                            NumberTheory.CheckDigit(choice[1]);
+                            break;
+                        case "numRand":
+                            if (choice.Length != 5)
+                            {
+                                Console.WriteLine("Usage: numRand [a] [X] [c] [m]");
+                                break;
+                            }
+                            NumberTheory.LCG(
+                                Convert.ToInt32(choice[1]),   // a
+                                Convert.ToInt32(choice[2]),   // X (seed)
+                                Convert.ToInt32(choice[3]),   // c
+                                Convert.ToInt32(choice[4])    // m
+                            );
                             break;
                     }
                 }
