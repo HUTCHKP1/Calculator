@@ -108,7 +108,7 @@ namespace Calculator
             int check = (11 - (sum % 11)) % 11;
             if (check == 10)
             {
-                return "x";
+                return "X";
             }
             else
             {
