@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    internal class Calculate
+    public class Calculate
     {
         public static double ans = 0;
         
