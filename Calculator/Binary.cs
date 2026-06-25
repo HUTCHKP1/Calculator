@@ -14,6 +14,12 @@ namespace Calculator
         // Used to guard Addition, Subtraction, and Negate against corrupted input
         // Returns true if valid binary, false otherwise
         */
+
+        /*
+         * Difficulty: C# doesn't throw a helpful error when non-binary characters corrupt the carry arithmetic — it silently produces wrong results
+         * Solution: foreach loop checking each character is exactly '0' or '1'
+         * Why: foreach is the natural tool for character-by-character string inspection (Lab 13), and returning bool keeps the validator reusable across multiple methods
+         */
         public static bool IsValidBinary(string input)
         { 
             if (input == "" || input == null)
@@ -34,6 +40,13 @@ namespace Calculator
         // Used to guard DecimalToBCD against letters, decimals, symbols
         // Returns true if valid decimal, false otherwise
         */
+
+
+        /*
+         * Difficulty: same problem — letters or decimal points passed to DecimalToBCD would corrupt the ASCII subtraction c - '0'
+         * Solution: checking c < '0' || c > '9' uses the ASCII ordering directly rather than needing a lookup
+         * Why: consistent approach with IsValidBinary, reusable in Program.cs for numCheckDigit validation
+         */
         public static bool IsValidDecimal(string input)
         {
             if (input == "" || input == null)
@@ -49,6 +62,11 @@ namespace Calculator
             }
             return true;
         }
+        /*
+         * Difficulty: inputs can be different lengths, so you can't just loop through both arrays together
+         * Solution: two separate index variables working right-to-left, each checked independently before use
+         * Why: this approach from GeeksForGeeks handles mismatched lengths naturally without needing to pad first — the carry continues even after both indices exhaust
+         */
         public static string Addition(string inputA, string inputB)
         {
 
@@ -80,6 +98,11 @@ namespace Calculator
             ans = result;
             return ans;
         }
+        /*
+         * Difficulty: handling signed vs unsigned differently, and the overflow from Negate
+         * Solution: truncating the result back to inputA's length
+         * Why: avoids needing to fix Negate itself, documented as known limitation
+         */
         public static string Subtraction(string inputA, string inputB, bool signed)
         {
             string temp, truncatedAns, negatedB;
@@ -107,6 +130,9 @@ namespace Calculator
          * Need to implement a trim to remove the excess "1", 
          * and ensure the output is the same character len 
          * as the max input length.
+         * Difficulty: negating "0000" produces "10000" because flipping gives "1111" and adding 1 cascades a carry into a fifth bit
+         * Solution: documented as a known limitation rather than fixed — Subtraction's truncation step rescues the result when Negate is called internally
+         * Why: fixing Negate would require truncating inside it, which would break cases where the extra bit is meaningful — the limitation is narrow and documented in tests
          */
         public static string Negate(string input)
         {
@@ -130,6 +156,11 @@ namespace Calculator
             string flip = Addition(result, "1");
             return flip;
         }
+        /*
+         * Difficulty: signed binary numbers must extend with their sign bit, not with zero — padding a negative number with 0s changes its value
+         * Solution: read the first character of each string as the sign bit and use PadLeft with that character
+         * Why: this correctly implements sign extension as defined in two's complement arithmetic
+         */
         public static void PadSigned(ref string a, ref string b)
         {
             int maxLength = Math.Max(a.Length ,b.Length);
@@ -138,12 +169,23 @@ namespace Calculator
             a = a.PadLeft(maxLength, signA);
             b = b.PadLeft(maxLength, signB);
         }
+        /*
+         * Difficulty: same length mismatch problem as signed, but simpler since unsigned numbers always extend with 0
+         * Solution: PadLeft with '0' to the max length of the two inputs
+         * Why: PadLeft is the natural string method for this (Lab 14), and '0' is always correct for unsigned extension
+         */
         public static void PadUnsigned(ref string a, ref string b)
         {
             int maxLength = Math.Max(a.Length, b.Length);
             a = a.PadLeft(maxLength, '0');
             b = b.PadLeft(maxLength, '0');
         }
+
+        /*
+         * Difficulty: each decimal digit needs to be independently converted to exactly 4 bits regardless of its value — Convert.ToString(digit, 2) produces variable-length output (e.g. "1" for 1, not "0001")
+         * Solution: PadLeft(4, '0') after each conversion to enforce fixed 4-bit wide.
+         * BCD format requires exactly 4 bits per group — without padding, groups would be unreadable and BCDAddition's Split would produce wrong-length strings
+         */
         public static string DecimalToBCD(string decimalInput)
         {
             if (!IsValidDecimal(decimalInput))
@@ -163,6 +205,12 @@ namespace Calculator
 
 
         // https://www.scaler.com/topics/bcd-addition/
+
+        /*
+         * Difficulty: two BCD strings can have different numbers of groups, and the shorter one needs right-aligning before addition — you can't just zip them together
+         * Solution: build padded arrays using a negative-index trick: srcA = i - (maxLen - lenA) is negative for positions before the shorter array starts, triggering "0000" padding
+         * Why: this avoids needing a second pass or a List — one loop handles both padding and copying using only arrays (Lab 12)
+         */
         public static string BCDAddition(string bcdA, string bcdB)
         {
             // Lab 14
