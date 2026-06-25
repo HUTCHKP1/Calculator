@@ -38,7 +38,21 @@ namespace Calculator
                 //Help
                 if (choice.Contains("HELP"))
                 {
-                    Console.WriteLine("Binary operations: ADDS, ADDU, SUBS, SUBU, BCD, BCDA, CONVERT \nUsage: BIN [OPERATION] [BINARY NUMBER 1] [BINARY NUMBER 2]\nOther operations: CLR, ESC");
+                    Console.WriteLine("=== CALCULATOR HELP ============================");
+                    Console.WriteLine("BASIC:        [num][op][num]  e.g. 5+3, 10/2, 5!");
+                    Console.WriteLine("BINARY:       BIN ADDS/ADDU/SUBS/SUBU [a] [b]");
+                    Console.WriteLine("              BIN CONVERT BIN/HEX/DEC [value]");
+                    Console.WriteLine("              BIN BCD [decimal]");
+                    Console.WriteLine("              BIN BCDA [decimal] [decimal]");
+                    Console.WriteLine("MATRICES:     mat [name] [a] [b] [c] [d]");
+                    Console.WriteLine("              addMat/dotMat [a] [b]");
+                    Console.WriteLine("              scalMat [scalar] [matrix]");
+                    Console.WriteLine("              detMat/invMat [matrix]");
+                    Console.WriteLine("NUMBER THEORY:numPrime [n]");
+                    Console.WriteLine("              numCheckDigit [digits]");
+                    Console.WriteLine("              numRand [a] [X] [c] [m]");
+                    Console.WriteLine("OTHER:        HELP, CLR, ESC");
+                    Console.WriteLine("================================================");
                 }
                 //Clear
                 else if (choice[0] == "CLR")
