@@ -379,23 +379,3 @@ namespace Calculator
         }
     }
 }
-//                        else
-//                        {
-//                            string type = input, temp;
-
-//                            input = Console.ReadLine();
-
-//                            switch (type)
-//                            {
-//                                case "BIN":
-//                                    Calculate.Binary(ref input);
-//                                    Console.WriteLine(Calculate.ans);
-//                                    break;
-//                            }
-//                        }
-//                    }
-//                }    
-//            }  
-//        }
-//    }
-//}
