@@ -392,15 +392,15 @@ namespace MatrixNumberTheoryTesting
                 Assert.AreEqual("0", NumberTheory.ISBN10CheckDigit("000000000"));
             }
 
-            [TestMethod]
-            // Valid: UPC check digit — "03600029145" → check digit 8
-            // A real-world UPC barcode, hand-verified against known check digit
-            public void UPCCheckDigit_RealBarcode_CorrectCheckDigit()
-            {
-                Assert.AreEqual(8, NumberTheory.UPCCheckDigit("03600029145"));
-            }
+        [TestMethod]
+        // Valid: UPC check digit for "03600029145"
+        // Manually verified: sum = 58, (10 - 58%10)%10 = 2
+        public void UPCCheckDigit_RealBarcode_CorrectCheckDigit()
+        {
+            Assert.AreEqual(2, NumberTheory.UPCCheckDigit("03600029145"));
+        }
 
-            [TestMethod]
+        [TestMethod]
             // Valid: EAN-13 check digit — "400638133393" → check digit 1
             // A real-world EAN-13 barcode, hand-verified
             public void EANCheckDigit_RealBarcode_CorrectCheckDigit()
