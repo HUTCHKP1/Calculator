@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCalcTest", "..\CalcTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryTesting", "..\BinaryTesting\BinaryTesting.csproj", "{9F08DA3C-F1EA-4389-B264-BBDCE170100D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixNumberTheoryTesting", "..\MatrixNumberTheoryTesting\MatrixNumberTheoryTesting.csproj", "{83831DDD-E172-4425-97FB-75B370FFAA52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9F08DA3C-F1EA-4389-B264-BBDCE170100D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F08DA3C-F1EA-4389-B264-BBDCE170100D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F08DA3C-F1EA-4389-B264-BBDCE170100D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83831DDD-E172-4425-97FB-75B370FFAA52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83831DDD-E172-4425-97FB-75B370FFAA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83831DDD-E172-4425-97FB-75B370FFAA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83831DDD-E172-4425-97FB-75B370FFAA52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
