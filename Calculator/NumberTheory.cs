@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    internal class NumberTheory
+    public class NumberTheory
     {
         // Trial division up to sqrt(n) — efficient enough for n < 10000
         // Math.Sqrt from Lab 4

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Calculator
 {
-    internal class Program
+    public class Program
     {
         public static string DivideByZero = "Undefined: Cannot divide by zero";
         public static string FactorOfZero = "Undefined: Cannot Factorise by zero";

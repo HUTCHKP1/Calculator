@@ -7,7 +7,7 @@ namespace Calculator
         public double a, b, c, d;
         // lab 21
     }
-    internal class Matrix
+    public class Matrix
     {
         static MatrixData[] matrices = new MatrixData[26]; // matrices are named with single letters (mat a, mat b...) so 26 covers a–z. It's a reasonable max.
         static int maxCount = 0;
