@@ -20,7 +20,6 @@ namespace Calculator
                   "mat", "addMat", "dotMat", "scalMat", 
                   "detMat", "invMat", "numPrime", "numCheckDigit", "numRand" 
                 };
-                string[] conversion = { "BIN", "HEX", "DEC" };
 
                 double num1 = 0, num2 = 0;
                 char[] operators = { '+', '-', '*', '/', '%', '!' };
@@ -65,7 +64,6 @@ namespace Calculator
                     {
                         case "BIN":
                             string[] binaryMethods = { "ADDS", "ADDU", "SUBS", "SUBU", "CONVERT", "BCD", "BCDA" };
-                            char[] isBinary = { '0', '1' };
                             //if (choice.Length != 4)
                             //{
                             //    Console.WriteLine("Invalid input for binary operation. Please provide an operation and binary number(s).");
