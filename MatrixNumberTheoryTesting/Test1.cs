@@ -416,16 +416,15 @@ namespace MatrixNumberTheoryTesting
                 Assert.AreEqual(0, NumberTheory.EANCheckDigit("000000000000"));
             }
 
-            [TestMethod]
-            // Edge: ISBN-10 check digit of 10 should return "X" not "10"
-            // Tests the special X case — "014131157X" is a real ISBN
-            // "014131157" produces check = 10
-            public void ISBN10CheckDigit_ResultTen_ReturnsX()
-            {
-                Assert.AreEqual("X", NumberTheory.ISBN10CheckDigit("014131157"));
-            }
+        [TestMethod]
+        // Invalid: ISBN-10 check digit of 10 should return "X" not "10"
+        // "020161622" verified manually: sum = 100, (11 - 100%11)%11 = 10 → X
+        public void ISBN10CheckDigit_ResultTen_ReturnsX()
+        {
+            Assert.AreEqual("X", NumberTheory.ISBN10CheckDigit("020161622"));
+        }
 
-            [TestMethod]
+        [TestMethod]
             // Invalid: wrong length input to CheckDigit should hit default case
             // Tests that the router rejects inputs that don't match any barcode length
             // We test this indirectly by checking the individual methods with correct lengths
@@ -441,6 +440,6 @@ namespace MatrixNumberTheoryTesting
             }
         }
     }
-}
+
 
 
